@@ -63,11 +63,11 @@ function Detail() {
               <p className="mt-3">{product.description}</p>
               <div className="flex gap-3 mt-4">
                 <button className="flex items-center gap-2 border-solid border border-sky-500 text-sky-500 bg-white px-4 py-2 rounded-full hover:scale-105 hover:shadow-md hover:shadow-sky-200">
-                  <BsFillPlusCircleFill />
+                  <BsFillPlusCircleFill className="text-xl" />
                   Add To Cart
                 </button>
                 <button className="flex items-center gap-2 bg-sky-500 text-white px-4 py-2 rounded-full hover:scale-105 hover:shadow-md hover:shadow-sky-200">
-                  <BsFillCartCheckFill />
+                  <BsFillCartCheckFill className="text-xl" />
                   Order Now
                 </button>
               </div>

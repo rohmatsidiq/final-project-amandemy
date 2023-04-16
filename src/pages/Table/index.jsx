@@ -51,9 +51,9 @@ function Table() {
           <div className="flex justify-end">
             <Link
               to={"/create"}
-              className="flex items-center gap-2 bg-sky-500 px-3 py-1 rounded-full text-white hover:scale-105 hover:shadow-md hover:shadow-sky-200"
+              className="flex items-center gap-2 bg-sky-500 px-3 py-2 rounded-full text-white hover:scale-105 hover:shadow-md hover:shadow-sky-200"
             >
-              <MdCreateNewFolder />
+              <MdCreateNewFolder className="text-xl" />
               Create Product
             </Link>
           </div>
@@ -81,8 +81,8 @@ function Table() {
                   </td>
                   <td className="border p-2">{item.harga_display}</td>
                   <td className="border p-2">{item.harga_diskon_display}</td>
-                  <td className="border p-2">
-                    <div className="w-32 h-32 p-3 rounded-lg overflow-hidden">
+                  <td className="border p-2 flex justify-center items-start">
+                    <div className="w-32 h-32 p-3 rounded-lg overflow-hidden ">
                       <img
                         className="w-full h-full object-cover"
                         src={item.image_url}
@@ -94,7 +94,7 @@ function Table() {
                   <td className="border p-2 text-center">
                     <Link to={`/edit/${item.id}`}>
                       <button className=" bg-yellow-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-md hover:shadow-yellow-200">
-                        <MdEditSquare />
+                        <MdEditSquare className="text-xl" />
                       </button>
                     </Link>
                     <button
@@ -103,7 +103,7 @@ function Table() {
                       }}
                       className=" bg-red-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-md hover:shadow-red-200"
                     >
-                      <MdDeleteForever />
+                      <MdDeleteForever className="text-xl" />
                     </button>
                   </td>
                 </tr>

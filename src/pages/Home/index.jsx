@@ -35,7 +35,7 @@ function Home() {
             to={"/products"}
             className="flex items-center gap-2 bg-sky-500 text-white px-4 py-2 rounded-full hover:scale-105 hover:shadow-md hover:shadow-sky-200"
           >
-            <BsFillArrowRightCircleFill /> See more
+            <BsFillArrowRightCircleFill className="text-xl" /> See more
           </Link>
         </div>
         {newProducts.length <= 0 && (
