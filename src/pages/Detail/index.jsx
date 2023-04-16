@@ -30,10 +30,10 @@ function Detail() {
       <section className="w-screen max-w-[1200px] p-3 mx-auto mt-20">
         <div className="p-6 rounded-xl bg-white drop-shadow-md">
           <span className="text-sky-700">
-            <Link to={"/"}>Home</Link> /{" "}
+            <Link className="hover:text-sky-500" to={"/"}>Home</Link> /{" "}
           </span>
           <span className="text-sky-700">
-            <Link to={"/products"}>Products</Link> /{" "}
+            <Link className="hover:text-sky-500" to={"/products"}>Products</Link> /{" "}
           </span>
           <span className="text-sky-500">Detail</span>
           <div className="grid sm:grid-cols-5 gap-5 mt-5">
