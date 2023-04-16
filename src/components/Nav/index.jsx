@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Nav() {
   return (
-    <div className="bg-white text-sky-500 shadow-md fixed top-0 w-screen z-50">
+    <div className="bg-white text-sky-500 shadow-md fixed top-0 w-screen z-10">
       <div className="max-w-[1200px] mx-auto p-5 flex justify-between">
         <Link to={"/"}>
           <h1 className="text-2xl font-bold">My Shop</h1>
@@ -26,6 +26,14 @@ function Nav() {
             to={"/table"}
           >
             Table
+          </Link>
+        </div>
+        <div className="flex gap-5">
+          <Link to={'/login'} className="hover:scale-x-105 duration-100 hover:text-sky-600 hover:border-b hover:border-sky-300">
+            Login
+          </Link>
+          <Link to={'/register'} className="hover:scale-x-105 duration-100 hover:text-sky-600 hover:border-b hover:border-sky-300">
+            Register
           </Link>
         </div>
       </div>

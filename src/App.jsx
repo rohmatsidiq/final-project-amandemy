@@ -5,7 +5,9 @@ import {
   Detail,
   EditProduct,
   Home,
+  Login,
   Products,
+  Register,
   Table,
 } from "./pages";
 
@@ -18,6 +20,8 @@ function App() {
       <Route path="/edit/:id" element={<EditProduct />} />
       <Route path="/products" element={<Products />} />
       <Route path="/table" element={<Table />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   );
 }
