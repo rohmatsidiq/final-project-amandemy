@@ -35,7 +35,7 @@ function Products() {
           <input
             onChange={handleSearch}
             type="text"
-            className="px-3 py-2 rounded-full border focus:outline-none focus:border-sky-200 focus:shadow-lg focus:shadow-sky-200"
+            className="px-4 py-2 rounded-full border focus:outline-none focus:border-sky-200 focus:shadow-lg focus:shadow-sky-200"
             placeholder="Cari"
           />
         </div>

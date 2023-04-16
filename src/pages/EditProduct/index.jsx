@@ -3,11 +3,12 @@ import { Nav } from "../../components";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { MdCancel, MdSave } from "react-icons/md";
+import { BsCheck2Circle } from "react-icons/bs";
 
 function EditProduct() {
   const navigate = useNavigate();
   const { id } = useParams();
-
+  const [alertPopup, setAlertPopup] = useState(false);
   const [products, setProdutcs] = useState({
     name: "",
     stock: "",
@@ -22,7 +23,12 @@ function EditProduct() {
   const getProduct = async () => {
     try {
       const result = await axios.get(
-        `https://api-project.amandemy.co.id/api/products/${id}`
+        `https://api-project.amandemy.co.id/api/final/products/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       setProdutcs({
         name: result.data.data.name,
@@ -62,7 +68,7 @@ function EditProduct() {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `https://api-project.amandemy.co.id/api/products/${id}`,
+        `https://api-project.amandemy.co.id/api/final/products/${id}`,
         {
           name: products.name,
           stock: products.stock,
@@ -72,6 +78,11 @@ function EditProduct() {
           category: products.kategori,
           image_url: products.image_url,
           description: products.description,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
       setProdutcs({
@@ -84,8 +95,7 @@ function EditProduct() {
         image_url: "",
         description: "",
       });
-
-      navigate("/table");
+      setAlertPopup(true);
     } catch (error) {
       alert(error.response.data.info);
     }
@@ -109,8 +119,23 @@ function EditProduct() {
     getProduct();
   }, []);
 
+  if (alertPopup) {
+    setTimeout(() => {
+      navigate("/table");
+    }, 2000);
+  }
   return (
     <div>
+      {alertPopup && (
+        <div className="fixed top-0 bottom-0 z-50 w-screen min-h-screen bg-black bg-opacity-60 flex justify-center items-center">
+          <div className="bg-white p-9 px-10  rounded-2xl ">
+            <div className="mb-4">
+              <BsCheck2Circle className="text-5xl mx-auto" />
+            </div>
+            <h1 className="text-2xl">Produk Berhasil Disimpan</h1>
+          </div>
+        </div>
+      )}
       <Nav />
       <section className="w-screen max-w-[1200px] p-3 mx-auto mt-20">
         <div className=" p-6 rounded-2xl bg-white drop-shadow-md">
@@ -123,7 +148,7 @@ function EditProduct() {
                 Nama Barang
               </label>
               <input
-                className="border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
+                className="focus:shadow-lg focus:shadow-sky-200 border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
                 type="text"
                 id="name"
                 name="name"
@@ -137,7 +162,7 @@ function EditProduct() {
                 Stock Barang
               </label>
               <input
-                className="border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
+                className="focus:shadow-lg focus:shadow-sky-200 border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
                 type="number"
                 id="stock"
                 name="stock"
@@ -151,7 +176,7 @@ function EditProduct() {
                 Harga Barang
               </label>
               <input
-                className="border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
+                className="focus:shadow-lg focus:shadow-sky-200 border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
                 type="number"
                 id="harga"
                 name="harga"
@@ -163,7 +188,7 @@ function EditProduct() {
             <div className="mb-3 ">
               {products.is_diskon ? (
                 <input
-                  className="border px-4 py-2 rounded-2xl checked:border-sky-500"
+                  className="focus:shadow-lg focus:shadow-sky-200 border px-4 py-2 rounded-2xl checked:border-sky-500"
                   type="checkbox"
                   id="is_diskon"
                   name="is_diskon"
@@ -173,7 +198,7 @@ function EditProduct() {
                 />
               ) : (
                 <input
-                  className="border px-4 py-2 rounded-2xl checked:border-sky-500"
+                  className="focus:shadow-lg focus:shadow-sky-200 border px-4 py-2 rounded-2xl checked:border-sky-500"
                   type="checkbox"
                   id="is_diskon"
                   name="is_diskon"
@@ -191,7 +216,7 @@ function EditProduct() {
                   Harga Diskon
                 </label>
                 <input
-                  className="border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
+                  className="focus:shadow-lg focus:shadow-sky-200 border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
                   type="number"
                   id="harga_diskon"
                   name="harga_diskon"
@@ -204,7 +229,7 @@ function EditProduct() {
             <div className="md:col-span-2 flex flex-col gap-1">
               <label className="">Kategori</label>
               <select
-                className="border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500 bg-white"
+                className="focus:shadow-lg focus:shadow-sky-200 border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500 bg-white"
                 id="kategori"
                 name="kategori"
                 onChange={handleChange}
@@ -245,7 +270,7 @@ function EditProduct() {
                 Gambar Barang
               </label>
               <input
-                className="border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
+                className="focus:shadow-lg focus:shadow-sky-200 border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
                 type="text"
                 id="image_url"
                 name="image_url"
@@ -259,7 +284,7 @@ function EditProduct() {
                 Deskripsi
               </label>
               <textarea
-                className="border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
+                className="focus:shadow-lg focus:shadow-sky-200 border px-4 py-2 rounded-2xl focus:outline-none focus:border-sky-500"
                 id="description"
                 name="description"
                 rows="10"
@@ -272,16 +297,16 @@ function EditProduct() {
           <div className="flex justify-end gap-3 mt-5">
             <button
               onClick={handleCancel}
-              className="flex items-center gap-2 border-solid border border-sky-500 text-sky-500 bg-white px-4 py-2 rounded-2xl hover:scale-105 hover:shadow-md hover:shadow-sky-200"
+              className="flex items-center gap-2 border-solid border border-sky-500 text-sky-500 bg-white px-4 py-2 rounded-full hover:scale-105 hover:shadow-md hover:shadow-sky-200"
             >
-              <MdCancel />
+              <MdCancel className="text-2xl" />
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="flex items-center gap-2 bg-sky-500 text-white px-4 py-2 rounded-2xl hover:scale-105 hover:shadow-md hover:shadow-sky-200"
+              className="flex items-center gap-2 bg-sky-500 text-white px-4 py-2 rounded-full hover:scale-105 hover:shadow-md hover:shadow-sky-200"
             >
-              <MdSave />
+              <MdSave className="text-2xl" />
               Save
             </button>
           </div>

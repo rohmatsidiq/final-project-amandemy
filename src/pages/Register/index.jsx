@@ -53,7 +53,7 @@ export default function Register() {
   return (
     <div>
       {alertPopup && (
-        <div className="absolute top-0 z-50 w-screen h-screen bg-black bg-opacity-60 flex justify-center items-center">
+        <div className="fixed top-0 z-50 w-screen h-screen bg-black bg-opacity-60 flex justify-center items-center">
           <div className="bg-white p-9 px-10  rounded-2xl ">
             <div className="mb-4">
               <BsCheck2Circle className="text-5xl mx-auto" />

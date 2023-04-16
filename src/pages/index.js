@@ -6,6 +6,8 @@ import Products from "./Products";
 import Table from "./Table";
 import Login from "./Login";
 import Register from "./Register";
+import Protected from "./Protected";
+import Guest from "./Guest";
 
 export {
   CreateProduct,
@@ -16,4 +18,6 @@ export {
   Table,
   Login,
   Register,
+  Protected,
+  Guest,
 };

@@ -4,9 +4,11 @@ import {
   CreateProduct,
   Detail,
   EditProduct,
+  Guest,
   Home,
   Login,
   Products,
+  Protected,
   Register,
   Table,
 } from "./pages";
@@ -15,13 +17,18 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/create" element={<CreateProduct />} />
       <Route path="/detail/:id" element={<Detail />} />
-      <Route path="/edit/:id" element={<EditProduct />} />
       <Route path="/products" element={<Products />} />
-      <Route path="/table" element={<Table />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route element={<Protected />}>
+        <Route path="/table" element={<Table />} />
+        <Route path="/edit/:id" element={<EditProduct />} />
+        <Route path="/create" element={<CreateProduct />} />
+      </Route>
+
+      <Route element={<Guest />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
     </Routes>
   );
 }

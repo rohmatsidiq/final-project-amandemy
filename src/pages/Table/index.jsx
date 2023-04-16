@@ -6,15 +6,25 @@ import {
   MdCreateNewFolder,
   MdEditSquare,
   MdDeleteForever,
+  MdCancel,
 } from "react-icons/md";
+import { BsFillCheckCircleFill, BsCheck2Circle } from "react-icons/bs";
 
 function Table() {
+  const [alertPopup, setAlertPopup] = useState(false);
+  const [confirmDelete, SetConfirmDelete] = useState(false);
+  const [idDelete, setIdDelete] = useState();
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const getProducts = async () => {
     try {
       const result = await axios.get(
-        "https://api-project.amandemy.co.id/api/products"
+        "https://api-project.amandemy.co.id/api/final/products",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
 
       setProducts(result.data.data);
@@ -23,12 +33,18 @@ function Table() {
     }
   };
 
-  const handleDelete = (id) => {
+  const showConfirm = (id) => {
+    setIdDelete(id);
+    SetConfirmDelete(true);
+  };
+
+  const handleDelete = () => {
     try {
       const response = axios.delete(
-        `https://api-project.amandemy.co.id/api/products/${id}`
+        `https://api-project.amandemy.co.id/api/products/${idDelete}`
       );
-      alert("Berhasil menghapus data");
+      SetConfirmDelete(false);
+      setAlertPopup(true);
       getProducts();
     } catch (error) {
       console.log(error);
@@ -42,8 +58,51 @@ function Table() {
   useEffect(() => {
     getProducts();
   }, []);
+
+  if (alertPopup) {
+    setTimeout(() => {
+      getProducts();
+      setAlertPopup(false);
+    }, 2000);
+  }
+
   return (
     <div>
+      {confirmDelete && (
+        <div className="fixed top-0 z-50 w-screen h-screen bg-black bg-opacity-60 flex justify-center items-center">
+          <div className="bg-white p-9 px-10  rounded-2xl ">
+            <h1 className="text-2xl">Yakin Hapus Produk?</h1>
+            <div className="flex justify-around mt-5">
+              <button
+                onClick={() => {
+                  SetConfirmDelete(false);
+                }}
+                className="bg-sky-500 text-white px-4 py-2 rounded-full hover:scale-105 hover:shadow-lg hover:shadow-sky-200 flex gap-2 items-center"
+              >
+                <MdCancel className="text-3xl" />
+                No
+              </button>
+              <button
+                onClick={handleDelete}
+                className="bg-sky-500 text-white px-4 py-2 rounded-full hover:scale-105 hover:shadow-lg hover:shadow-sky-200 flex gap-2 items-center"
+              >
+                <BsFillCheckCircleFill className="text-2xl" />
+                Yes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {alertPopup && (
+        <div className="fixed top-0 bottom-0 z-50 w-screen min-h-screen bg-black bg-opacity-60 flex justify-center items-center">
+          <div className="bg-white p-9 px-10  rounded-2xl ">
+            <div className="mb-4">
+              <BsCheck2Circle className="text-5xl mx-auto" />
+            </div>
+            <h1 className="text-2xl">Produk Berhasil Dihapus</h1>
+          </div>
+        </div>
+      )}
       <Nav />
       {products.length <= 0 && (
         <div className="w-full h-screen flex justify-center items-center">
@@ -57,7 +116,7 @@ function Table() {
             <input
               onChange={handleSearch}
               type="text"
-              className="px-3 py-2 rounded-full border focus:outline-none focus:border-sky-200 focus:shadow-lg focus:shadow-sky-200"
+              className="px-4 py-2 rounded-full border focus:outline-none focus:border-sky-200 focus:shadow-lg focus:shadow-sky-200"
               placeholder="Cari"
             />
             <Link
@@ -116,7 +175,7 @@ function Table() {
                       </Link>
                       <button
                         onClick={() => {
-                          return handleDelete(item.id);
+                          return showConfirm(item.id);
                         }}
                         className=" bg-red-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-lg hover:shadow-red-200"
                       >
