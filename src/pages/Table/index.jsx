@@ -110,7 +110,7 @@ function Table() {
                     <td className="border p-2">{item.category}</td>
                     <td className="border p-2 text-center">
                       <Link to={`/edit/${item.id}`}>
-                        <button className=" bg-yellow-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-md hover:shadow-yellow-200">
+                        <button className=" bg-yellow-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-lg hover:shadow-yellow-200">
                           <MdEditSquare className="text-xl" />
                         </button>
                       </Link>
@@ -118,7 +118,7 @@ function Table() {
                         onClick={() => {
                           return handleDelete(item.id);
                         }}
-                        className=" bg-red-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-md hover:shadow-red-200"
+                        className=" bg-red-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-lg hover:shadow-red-200"
                       >
                         <MdDeleteForever className="text-xl" />
                       </button>
