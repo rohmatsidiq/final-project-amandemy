@@ -10,6 +10,7 @@ import {
 
 function Table() {
   const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState("");
   const getProducts = async () => {
     try {
       const result = await axios.get(
@@ -34,6 +35,10 @@ function Table() {
     }
   };
 
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -48,7 +53,13 @@ function Table() {
       {products.length > 0 && (
         <div className="mt-20 max-w-[1200px] mx-auto p-5">
           <h1 className="text-center text-3xl font-bold">Table Products</h1>
-          <div className="flex justify-end">
+          <div className="flex justify-between">
+            <input
+              onChange={handleSearch}
+              type="text"
+              className="px-3 py-2 rounded-full border focus:outline-none focus:border-sky-200 focus:shadow-lg focus:shadow-sky-200"
+              placeholder="Cari"
+            />
             <Link
               to={"/create"}
               className="flex items-center gap-2 bg-sky-500 px-3 py-2 rounded-full text-white hover:scale-105 hover:shadow-md hover:shadow-sky-200"
@@ -72,42 +83,48 @@ function Table() {
             </thead>
 
             <tbody className="text-center ">
-              {products.map((item, index) => (
-                <tr key={index}>
-                  <td className="border p-2">{item.id}</td>
-                  <td className="border p-2">{item.name}</td>
-                  <td className="border p-2">
-                    {item.is_diskon ? "Aktif" : "Tidak Aktif"}
-                  </td>
-                  <td className="border p-2">{item.harga_display}</td>
-                  <td className="border p-2">{item.harga_diskon_display}</td>
-                  <td className="border p-2 flex justify-center items-start">
-                    <div className="w-32 h-32 p-3 rounded-lg overflow-hidden ">
-                      <img
-                        className="w-full h-full object-cover"
-                        src={item.image_url}
-                        alt=""
-                      />
-                    </div>
-                  </td>
-                  <td className="border p-2">{item.category}</td>
-                  <td className="border p-2 text-center">
-                    <Link to={`/edit/${item.id}`}>
-                      <button className=" bg-yellow-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-md hover:shadow-yellow-200">
-                        <MdEditSquare className="text-xl" />
+              {products
+                .filter((i) => {
+                  return search.toLowerCase() === ""
+                    ? i
+                    : i.name.toLowerCase().includes(search);
+                })
+                .map((item, index) => (
+                  <tr key={index}>
+                    <td className="border p-2">{item.id}</td>
+                    <td className="border p-2">{item.name}</td>
+                    <td className="border p-2">
+                      {item.is_diskon ? "Aktif" : "Tidak Aktif"}
+                    </td>
+                    <td className="border p-2">{item.harga_display}</td>
+                    <td className="border p-2">{item.harga_diskon_display}</td>
+                    <td className="border p-2 flex justify-center items-start">
+                      <div className="w-32 h-32 p-3 rounded-lg overflow-hidden ">
+                        <img
+                          className="w-full h-full object-cover"
+                          src={item.image_url}
+                          alt=""
+                        />
+                      </div>
+                    </td>
+                    <td className="border p-2">{item.category}</td>
+                    <td className="border p-2 text-center">
+                      <Link to={`/edit/${item.id}`}>
+                        <button className=" bg-yellow-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-md hover:shadow-yellow-200">
+                          <MdEditSquare className="text-xl" />
+                        </button>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          return handleDelete(item.id);
+                        }}
+                        className=" bg-red-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-md hover:shadow-red-200"
+                      >
+                        <MdDeleteForever className="text-xl" />
                       </button>
-                    </Link>
-                    <button
-                      onClick={() => {
-                        return handleDelete(item.id);
-                      }}
-                      className=" bg-red-500 text-white p-2 rounded-full hover:scale-105 m-1 hover:shadow-md hover:shadow-red-200"
-                    >
-                      <MdDeleteForever className="text-xl" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
