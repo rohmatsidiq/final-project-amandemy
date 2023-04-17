@@ -10,7 +10,12 @@ function Home() {
   const getProducts = async () => {
     try {
       const result = await axios.get(
-        "https://api-project.amandemy.co.id/api/products"
+        "https://api-project.amandemy.co.id/api/final/products",
+        {
+          headers: {
+            Authorization: `Bearer 1|jXy9zHnhqkSbTFyj21CnpzkIEMGImkrGbxQOrpXA`,
+          },
+        }
       );
 
       setProducts(result.data.data);

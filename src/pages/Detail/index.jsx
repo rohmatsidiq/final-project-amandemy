@@ -11,7 +11,7 @@ function Detail() {
   const getProduct = async () => {
     try {
       const result = await axios.get(
-        `https://api-project.amandemy.co.id/api/products/${id}`
+        `https://api-project.amandemy.co.id/api/final/products/${id}`
       );
       setProduct(result.data.data);
     } catch (error) {
